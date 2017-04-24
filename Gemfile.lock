@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/jlund15/BMF_view_tool
+  revision: 2f06183f98b9f82ca5b91b5b8f3fb4e7ee73f720
+  specs:
+    BMF_view_tool (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -182,6 +188,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  BMF_view_tool!
   bootstrap (~> 4.0.0.alpha6)
   byebug
   coffee-rails (~> 4.2)
