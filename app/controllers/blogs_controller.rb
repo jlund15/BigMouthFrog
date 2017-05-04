@@ -17,11 +17,15 @@ class BlogsController < ApplicationController
   # GET /blogs/1
   # GET /blogs/1.json
   def show
-    @blog = Blog.includes(:comments).friendly.find(params[:id])
-    @comment = Comment.new
-    
-    @page_title = @blog.title
-    @seo_keywords = @blog.body
+    if logged_in?(:site_admin) || @blog.published?
+      @blog = Blog.includes(:comments).friendly.find(params[:id])
+      @comment = Comment.new
+      
+      @page_title = @blog.title
+      @seo_keywords = @blog.body
+    else
+      redirect_to blogs_path, notice: "You are not authorized to access this page."
+    end
   end
 
   # GET /blogs/new
@@ -63,11 +67,10 @@ class BlogsController < ApplicationController
   # DELETE /blogs/1
   # DELETE /blogs/1.json
   def destroy
-    @portfolio_item = Portfolio.find(params[:id])
-
-    @portfolio_item.destroy
+    @blog.destroy
     respond_to do |format|
-      format.html { redirect_to blogs_url, notice: 'Blog was successfully destroyed.' }
+      format.html { redirect_to blogs_url, notice: 'Post was removed.' }
+      format.json {head :no_content }
     end
   end
 
