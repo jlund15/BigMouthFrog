@@ -20,5 +20,6 @@ Bundler.require(*Rails.groups)
 module BigMouthFrog
   class Application < Rails::Application
     config.eager_load_paths << "#{Rails.root}/lib"
+    config.secret_key_base = ENV["SECRET_KEY-BASE"]
   end
 end
