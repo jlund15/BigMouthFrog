@@ -2,7 +2,7 @@ class BlogsController < ApplicationController
   before_action :set_blog, only: [:show, :edit, :update, :destroy, :toggle_status]
   before_action :set_sidebar_topics, except: [:update, :destroy, :create, :toggle_status]
   layout "blog"
-  access all: [:show, :index], user: {except: [:destroy, :new, :create, :update, :edit]}, site_admin: :all
+  access all: [:show, :index], user: {except: [:destroy, :new, :create, :update, :edit, :toggle_status]}, site_admin: :all
 
   # GET /blogs
   # GET /blogs.json
@@ -58,7 +58,6 @@ class BlogsController < ApplicationController
     respond_to do |format|
       if @blog.update(blog_params)
         format.html { redirect_to @blog, notice: 'Blog was successfully updated.' }
-        format.json { render :show, status: :ok, location: @blog }
       else
         format.html { render :edit }
       end
@@ -76,7 +75,6 @@ class BlogsController < ApplicationController
   end
 
   def toggle_status
-
     if @blog.draft?
       @blog.published?
     elsif @blog.published?
@@ -85,7 +83,6 @@ class BlogsController < ApplicationController
 
     redirect_to blogs_url, notice: 'Post status has been updated.'
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -101,5 +98,4 @@ class BlogsController < ApplicationController
     def set_sidebar_topics
       @side_bar_topics = Topic.with_blogs
     end
-
 end
